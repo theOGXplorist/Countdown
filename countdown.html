@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Countdown Timer</title>
+    <style>
+        #title {
+            font-size: 2.5em;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #countdown {
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="title">It's the final countdowwwwwwwn!</div>
+    <div id="countdown"></div>
+
+    <script>
+        function updateCountdown() {
+            const now = new Date().getTime();
+
+            // Calculate the target time in PST (UTC-8)
+            const nowPST = new Date(now - 8 * 60 * 60 * 1000);
+            const targetTimePST = new Date(nowPST);
+            targetTimePST.setHours(12, 2, 0, 0);
+            targetTimePST.setDate(nowPST.getDate() + 1);
+
+            // Calculate the time difference
+            const distance = targetTimePST.getTime() - now;
+
+            // Time calculations for days, hours, minutes, and seconds
+            const hours = Math.floor((distance % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+            const minutes = Math.floor((distance % (60 * 60 * 1000)) / (60 * 1000));
+            const seconds = Math.floor((distance % (60 * 1000)) / 1000);
+
+            // Display the result in the element with id="countdown"
+            document.getElementById("countdown").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+
+            // If the countdown is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "EXPIRED";
+            }
+        }
+
+        // Update the countdown every 1 second
+        const x = setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
